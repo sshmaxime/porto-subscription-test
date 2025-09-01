@@ -1,0 +1,11 @@
+{
+      "$schema": "https://json.schemastore.org/tsconfig",
+      "display": "React Library",
+      "extends": "./base.json",
+      "compilerOptions": {
+            "lib": ["ES2024", "DOM"],
+            "module": "ES2022",
+            "target": "ES2024",
+            "jsx": "react-jsx"
+      }
+}
