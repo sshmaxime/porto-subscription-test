@@ -6,7 +6,9 @@ import { useReadContract } from "wagmi";
 import { expContract, mockReceiver, mockServerAccount, mockServerKey } from "@/configs/constants";
 import { usePorto, usePortoActions } from "@/hooks/porto";
 import { useWeb3 } from "@/providers/web3";
+import { mintForServer } from "@/server/actions/mintForServer";
 import { mintOnBehalf } from "@/server/actions/mintOnBehalf";
+import { upgradeServerAccount } from "@/server/actions/upgradeServerAccount";
 
 const newPermissions: wallet_grantPermissions.Parameters = {
 	expiry: Math.floor(Date.now() / 1_000) + 60 * 60, // 1 hour
@@ -52,50 +54,83 @@ const Page = () => {
 		args: [mockReceiver!],
 	});
 
+	const { data: balanceServer } = useReadContract({
+		address: expContract.address,
+		abi: expContract.abi,
+		functionName: "balanceOf",
+		args: [mockServerAccount.address!],
+	});
+
 	return (
 		<div>
-			<button type="button" onClick={connect}>
-				Connect
-			</button>
-			<button type="button" onClick={disconnect}>
-				Disconnect
-			</button>
+			<div>
+				<button type="button" onClick={connect}>
+					Connect
+				</button>
+				<button type="button" onClick={disconnect}>
+					Disconnect
+				</button>
+			</div>
 
-			<button
-				type="button"
-				onClick={() =>
-					grantPermissions.mutate(newPermissions, {
-						onError: (err) => console.log("Err: ", err),
-						onSuccess: (err) => console.log("Success: ", err),
-					})
-				}
-			>
-				Add Permissions
-			</button>
+			<div>
+				<button
+					type="button"
+					onClick={() =>
+						addFunds.mutate(
+							{},
+							{
+								onError: (err) => console.log("Err: ", err),
+								onSuccess: (err) => console.log("Success: ", err),
+							},
+						)
+					}
+				>
+					Add Exp
+				</button>
+			</div>
 
-			<button
-				type="button"
-				onClick={() =>
-					addFunds.mutate(
-						{},
-						{
+			<div>
+				<button
+					type="button"
+					onClick={() =>
+						grantPermissions.mutate(newPermissions, {
 							onError: (err) => console.log("Err: ", err),
 							onSuccess: (err) => console.log("Success: ", err),
-						},
-					)
-				}
-			>
-				Add Exp
-			</button>
+						})
+					}
+				>
+					Add Permissions
+				</button>
 
-			<button
-				type="button"
-				onClick={async () => {
-					await mintOnBehalf(eoa.address!);
-				}}
-			>
-				Mint on behalf
-			</button>
+				<button
+					type="button"
+					onClick={async () => {
+						await mintOnBehalf(eoa.address!);
+					}}
+				>
+					Mint on behalf
+				</button>
+			</div>
+
+			<div>
+				<button
+					type="button"
+					onClick={async () => {
+						await upgradeServerAccount();
+					}}
+				>
+					Upgrade Server Account
+				</button>
+
+				<button
+					type="button"
+					onClick={async () => {
+						await mintForServer();
+					}}
+				>
+					Mint For Server
+				</button>
+			</div>
 
 			<div>
 				<h1 className="text-2xl">Server:</h1>
@@ -128,6 +163,7 @@ const Page = () => {
 				<div className="flex flex-col">
 					<div>[Sender] - EXP Balance: {Value.formatEther(balanceSender ?? BigInt(0))}</div>
 					<div>[Receiver] - EXP Balance: {Value.formatEther(balanceReceiver ?? BigInt(0))}</div>
+					<div>[Server] - EXP Balance: {Value.formatEther(balanceServer ?? BigInt(0))}</div>
 				</div>
 			</div>
 

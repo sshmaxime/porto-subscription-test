@@ -20,7 +20,7 @@ const mintOnBehalf = async (address: Address) => {
 		key: mockServerKey,
 	});
 
-	console.log("Executed on behalf");
+	console.log("mintOnBehalf");
 };
 
 export { mintOnBehalf };

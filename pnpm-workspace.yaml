@@ -21,10 +21,10 @@ catalogs:
     "tailwindcss": 4.1.8
     "turbo": 2.5.5
     "typescript": 5.8.3
-    "viem": 2.33.1
-    "wagmi": 2.15.4
+    "viem": 2.37.3
+    "wagmi": 2.16.9
     "zod": 4.0.13
-    "porto": 0.0.81
+    "porto": 0.0.85
     "ox": 0.8.6
     "zustand": 5.0.7
 
