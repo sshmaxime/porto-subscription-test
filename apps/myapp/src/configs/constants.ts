@@ -1,5 +1,5 @@
 import { Key } from "porto";
-import { type Address, erc20Abi } from "viem";
+import { type Address } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 
 const mockServerPrivateKey = "0xa399d24d830627a32712cbe25749565ccaf045841e4b75e807dbc1ee9865ea8e";
@@ -10,11 +10,6 @@ const mockServerKey = Key.fromSecp256k1({
 });
 
 const mockReceiver = "0x3AB33a98Cea8E6e36113B3201194A9593621f5d3";
-
-const expContract = {
-	abi: erc20Abi,
-	address: "0x2Ec346E29Da8634C9be334b0fdDCb60754700976" as Address,
-};
 
 const expAbi = [
 	{
@@ -203,5 +198,10 @@ const expAbi = [
 	{ inputs: [], name: "PermitExpired", type: "error" },
 	{ inputs: [], name: "TotalSupplyOverflow", type: "error" },
 ] as const;
+
+const expContract = {
+	abi: expAbi,
+	address: "0x2d49a0e75c86779C391418214eC7e1B18E58Bb34" as Address,
+};
 
 export { mockServerAccount, mockServerKey, mockReceiver, expContract, expAbi };

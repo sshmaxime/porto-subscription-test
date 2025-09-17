@@ -1,3 +1,5 @@
+import "./system.css";
+
 import type { PropsWithChildren } from "react";
 import { Providers } from "@/providers";
 
