@@ -11,6 +11,13 @@ const upgradeServerAccount = async () => {
 		chain: baseSepolia,
 	});
 
+	// TODO: remove once https://github.com/ithacaxyz/relay/pull/1387 merged.
+	await RelayActions.sendCalls(client, {
+		account: mockServerAccount,
+		chain: baseSepolia,
+		calls: [],
+	});
+
 	console.log("upgradeServerAccount");
 };
 
