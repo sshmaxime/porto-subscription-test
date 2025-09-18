@@ -26,17 +26,16 @@ const newPermissions: wallet_grantPermissions.Parameters = {
 	permissions: {
 		calls: [
 			{
-				signature: "transfer(address,uint256)",
 				to: expContract.address,
 			},
 		],
-		// spend: [
-		// 	{
-		// 		period: "minute",
-		// 		limit: Value.fromEther("1"),
-		// 		token: expContract.address,
-		// 	},
-		// ],
+		spend: [
+			{
+				period: "minute",
+				limit: Value.fromEther("10"),
+				token: expContract.address,
+			},
+		],
 	},
 } as const;
 
